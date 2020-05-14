@@ -82,8 +82,9 @@ Sentry.init({
   tracesSampleRate,
   async beforeSend(event) {
     if (event.type === 'transaction') {
-      // for JavaScript transactions, set the transaction name based on the current window.location
-      // object against the application react-router routes
+      // For JavaScript transactions, translate the transaction name if it exists and doesn't start with /
+      // using the app's react-router routes. If the transaction name doesn't exist, use the window.location.pathname
+      // as the fallback.
 
       let prevTransactionName = event.transaction;
 
