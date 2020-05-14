@@ -26,6 +26,8 @@ import ConfigStore from 'app/stores/configStore';
 import Main from 'app/main';
 import ajaxCsrfSetup from 'app/utils/ajaxCsrfSetup';
 import plugins from 'app/plugins';
+import routes from 'app/routes';
+import getRouteStringFromRoutes from 'app/utils/getRouteStringFromRoutes';
 
 function getSentryIntegrations() {
   const integrations = [
@@ -70,10 +72,38 @@ const config = ConfigStore.getConfig();
 
 const tracesSampleRate = config ? config.apmSampling : 0;
 
+const appRoutes = Router.createRoutes(routes());
+
 Sentry.init({
   ...window.__SENTRY__OPTIONS,
   integrations: getSentryIntegrations(),
   tracesSampleRate,
+  async beforeSend(event) {
+    if (event.type === 'transaction') {
+      // for JavaScript transactions, set the transaction name based on the current window.location
+      // object against the application react-router routes
+
+      const transactionName: string | undefined = await new Promise(function(resolve) {
+        Router.match(
+          {routes: appRoutes, location: window.location},
+          (error, _redirectLocation, renderProps) => {
+            if (error) {
+              return resolve(undefined);
+            }
+
+            const routePath = getRouteStringFromRoutes(renderProps.routes ?? []);
+            return resolve(routePath);
+          }
+        );
+      });
+
+      if (typeof transactionName === 'string' && transactionName.length) {
+        event.transaction = transactionName;
+      }
+    }
+
+    return event;
+  },
 });
 
 if (window.__SENTRY__USER) {
