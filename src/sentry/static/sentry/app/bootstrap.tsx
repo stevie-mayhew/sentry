@@ -12,6 +12,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
 import * as Router from 'react-router';
+import {createMemoryHistory} from 'history';
 import * as Sentry from '@sentry/browser';
 import {ExtraErrorData} from '@sentry/integrations';
 import {Integrations} from '@sentry/apm';
@@ -73,6 +74,7 @@ const config = ConfigStore.getConfig();
 const tracesSampleRate = config ? config.apmSampling : 0;
 
 const appRoutes = Router.createRoutes(routes());
+const createLocation = createMemoryHistory().createLocation;
 
 Sentry.init({
   ...window.__SENTRY__OPTIONS,
@@ -83,9 +85,22 @@ Sentry.init({
       // for JavaScript transactions, set the transaction name based on the current window.location
       // object against the application react-router routes
 
+      let prevTransactionName = event.transaction;
+
+      if (typeof prevTransactionName === 'string') {
+        if (prevTransactionName.startsWith('/')) {
+          return event;
+        }
+      } else {
+        prevTransactionName = window.location.pathname;
+      }
+
       const transactionName: string | undefined = await new Promise(function(resolve) {
         Router.match(
-          {routes: appRoutes, location: window.location},
+          {
+            routes: appRoutes,
+            location: createLocation(prevTransactionName),
+          },
           (error, _redirectLocation, renderProps) => {
             if (error) {
               return resolve(undefined);
@@ -99,6 +114,14 @@ Sentry.init({
 
       if (typeof transactionName === 'string' && transactionName.length) {
         event.transaction = transactionName;
+
+        if (event.tags) {
+          event.tags['ui.route'] = transactionName;
+        } else {
+          event.tags = {
+            'ui.route': transactionName,
+          };
+        }
       }
     }
 
