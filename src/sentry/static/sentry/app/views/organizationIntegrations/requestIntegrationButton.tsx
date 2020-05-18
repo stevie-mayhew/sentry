@@ -7,8 +7,8 @@ import space from 'app/styles/space';
 
 const handleRequestIntegration = async () => {
   // TODO MARCOS
-  console.log("TODO")
-}
+  console.log('TODO');
+};
 
 // TODO Create the modal
 // TODO pass in a onclick?
