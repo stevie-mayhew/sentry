@@ -15,11 +15,12 @@ import {Wrapper, Header, Heading} from './styles';
 type Props = {
   project: Project;
   organization: Organization;
+  issueId: string;
 };
 
-const OwnershipRules = ({project, organization}: Props) => {
+const OwnershipRules = ({project, organization, issueId}: Props) => {
   const handleOpenCreateOwnershipRule = () => {
-    openCreateOwnershipRule({project, organization});
+    openCreateOwnershipRule({project, organization, issueId});
   };
 
   return (
