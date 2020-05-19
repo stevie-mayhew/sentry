@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {assignToUser, assignToActor} from 'app/actionCreators/group';
-import {openCreateOwnershipRule} from 'app/actionCreators/modal';
 import withApi from 'app/utils/withApi';
 import withOrganization from 'app/utils/withOrganization';
 import Access from 'app/components/acl/access';
@@ -154,14 +153,6 @@ class SuggestedOwners extends React.Component<Props, State> {
 
     return owners;
   }
-
-  handleOpenCreateOwnershipRule = () => {
-    const {organization, project} = this.props;
-    openCreateOwnershipRule({
-      project,
-      organization,
-    });
-  };
 
   handleAssign = (actor: Actor) => () => {
     if (actor.id === undefined) {
