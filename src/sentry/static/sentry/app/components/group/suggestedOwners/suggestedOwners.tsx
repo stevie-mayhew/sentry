@@ -4,6 +4,7 @@ import {assignToUser, assignToActor} from 'app/actionCreators/group';
 import {openCreateOwnershipRule} from 'app/actionCreators/modal';
 import withApi from 'app/utils/withApi';
 import withOrganization from 'app/utils/withOrganization';
+import Access from 'app/components/acl/access';
 import {Organization, Group, Event, Actor, Commit, Project, User} from 'app/types';
 import {Client} from 'app/api';
 
@@ -187,7 +188,9 @@ class SuggestedOwners extends React.Component<Props, State> {
         {owners.length > 0 && (
           <SuggestedAssignees owners={owners} onAssign={this.handleAssign} />
         )}
-        <OwnershipRules project={project} organization={organization} />
+        <Access access={['project:write']}>
+          <OwnershipRules project={project} organization={organization} />
+        </Access>
       </React.Fragment>
     );
   }
