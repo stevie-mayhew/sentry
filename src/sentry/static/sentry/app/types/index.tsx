@@ -64,10 +64,8 @@ export type Avatar = {
   avatarType: 'letter_avatar' | 'upload' | 'gravatar';
 };
 
-export type Actor = {
-  id: string;
+export type Actor = User & {
   type: 'user' | 'team';
-  name: string;
 };
 
 /**
@@ -337,9 +335,10 @@ type UserEnrolledAuthenticator = {
   id: EnrolledAuthenticator['authId'];
 };
 
-export type User = AvatarUser & {
+export type User = Omit<AvatarUser, 'options'> & {
   lastLogin: string;
   isSuperuser: boolean;
+  isAuthenticated: boolean;
   emails: {
     is_verified: boolean;
     id: string;
@@ -368,8 +367,8 @@ export type User = AvatarUser & {
 };
 
 export type CommitAuthor = {
-  email?: string;
-  name?: string;
+  email: string;
+  name: string;
 };
 
 // TODO(ts): This type is incomplete
