@@ -1,5 +1,6 @@
 import {Actor} from 'app/types';
 
+// TODO(ts): add the correct type
 export type Rules = Array<any> | null;
 
 /**
