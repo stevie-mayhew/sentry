@@ -130,7 +130,7 @@ class Dialog extends React.Component<Props, State> {
     const {rule, isFormValid, errors} = this.state;
 
     return (
-      <StyledModal show animation={false} onHide={onClose}>
+      <React.Fragment>
         <Modal.Header closeButton>
           {rule?.id !== -1 ? t('Edit a data privacy rule') : t('Add a data privacy rule')}
         </Modal.Header>
@@ -160,7 +160,7 @@ class Dialog extends React.Component<Props, State> {
             </Button>
           </ButtonBar>
         </Modal.Footer>
-      </StyledModal>
+      </React.Fragment>
     );
   }
 }

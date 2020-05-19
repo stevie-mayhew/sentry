@@ -104,7 +104,7 @@ const Form = ({
     {onUpdateEventId && (
       <EventIdField onUpdateEventId={onUpdateEventId} eventId={eventId} />
     )}
-    <FormField
+    {/* <FormField
       label={t('Source')}
       tooltipInfo={t(
         'Where to look. In the simplest case this can be an attribute name.'
@@ -120,7 +120,7 @@ const Form = ({
         error={errors.source}
         disabled={disabled}
       />
-    </FormField>
+    </FormField> */}
   </Wrapper>
 );
 

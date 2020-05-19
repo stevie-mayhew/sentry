@@ -2,7 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import {IconInfo} from 'app/icons';
-import {openCreateOwnershipRule} from 'app/actionCreators/modal';
+import {
+  openCreateOwnershipRule,
+  openCreateDataPrivacyRule,
+} from 'app/actionCreators/modal';
 import {t} from 'app/locale';
 import Button from 'app/components/button';
 import GuideAnchor from 'app/components/assistant/guideAnchor';
@@ -21,6 +24,10 @@ type Props = {
 const OwnershipRules = ({project, organization, issueId}: Props) => {
   const handleOpenCreateOwnershipRule = () => {
     openCreateOwnershipRule({project, organization, issueId});
+  };
+
+  const handleOpenCreateDataPrivacyRule = () => {
+    openCreateDataPrivacyRule({project, organization, issueId});
   };
 
   return (
@@ -53,7 +60,7 @@ const OwnershipRules = ({project, organization, issueId}: Props) => {
         </Button>
       </GuideAnchor>
       <GuideAnchor target="owners" position="bottom" offset={space(3)}>
-        <Button onClick={handleOpenCreateOwnershipRule} size="small">
+        <Button onClick={handleOpenCreateDataPrivacyRule} size="small">
           {t('Create Data Privacy Rule')}
         </Button>
       </GuideAnchor>

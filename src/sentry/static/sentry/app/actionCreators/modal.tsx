@@ -107,8 +107,15 @@ export async function openCreateDataPrivacyRule(options: CreateRuleModalOptions)
   const mod = await import(
     /* webpackChunkName: "CreateDataPrivacyRule" */ 'app/components/modals/createDataPrivacyRule'
   );
-  const {default: Modal, modalCss} = mod;
-  openModal(deps => <Modal {...deps} {...options} />, {modalCss});
+  const {default: Modal} = mod;
+  openModal(deps => (
+    <Modal
+      organization={options.organization}
+      project={options.project}
+      eventId={options.issueId}
+      onClose={deps.closeModal}
+    />
+  ));
 }
 
 export async function openCommandPalette(options: ModalOptions = {}) {
