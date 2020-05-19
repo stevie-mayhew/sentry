@@ -180,7 +180,7 @@ class SuggestedOwners extends React.Component<Props, State> {
   };
 
   render() {
-    const {organization, project} = this.props;
+    const {organization, project, group} = this.props;
     const owners = this.getOwnerList();
 
     return (
@@ -189,7 +189,11 @@ class SuggestedOwners extends React.Component<Props, State> {
           <SuggestedAssignees owners={owners} onAssign={this.handleAssign} />
         )}
         <Access access={['project:write']}>
-          <OwnershipRules project={project} organization={organization} />
+          <OwnershipRules
+            issueId={group.id}
+            project={project}
+            organization={organization}
+          />
         </Access>
       </React.Fragment>
     );

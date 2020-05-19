@@ -15,11 +15,12 @@ import {Wrapper, Header, Heading} from './styles';
 type Props = {
   project: Project;
   organization: Organization;
+  issueId: string;
 };
 
-const OwnershipRules = ({project, organization}: Props) => {
+const OwnershipRules = ({project, organization, issueId}: Props) => {
   const handleOpenCreateOwnershipRule = () => {
-    openCreateOwnershipRule({project, organization});
+    openCreateOwnershipRule({project, organization, issueId});
   };
 
   return (
@@ -49,6 +50,11 @@ const OwnershipRules = ({project, organization}: Props) => {
       <GuideAnchor target="owners" position="bottom" offset={space(3)}>
         <Button onClick={handleOpenCreateOwnershipRule} size="small">
           {t('Create Ownership Rule')}
+        </Button>
+      </GuideAnchor>
+      <GuideAnchor target="owners" position="bottom" offset={space(3)}>
+        <Button onClick={handleOpenCreateOwnershipRule} size="small">
+          {t('Create Data Privacy Rule')}
         </Button>
       </GuideAnchor>
     </Wrapper>

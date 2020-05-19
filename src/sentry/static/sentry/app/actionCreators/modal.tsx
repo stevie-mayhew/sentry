@@ -82,7 +82,7 @@ export async function openCreateTeamModal(options: CreateTeamModalOptions) {
   openModal(deps => <Modal {...deps} {...options} />);
 }
 
-type CreateOwnershipRuleModalOptions = {
+type CreateRuleModalOptions = {
   /**
    * The organization to create a rules for
    */
@@ -91,14 +91,23 @@ type CreateOwnershipRuleModalOptions = {
    * The project to create a rules for
    */
   project: Project;
+  issueId: string;
 };
 
-export async function openCreateOwnershipRule(options: CreateOwnershipRuleModalOptions) {
+export async function openCreateOwnershipRule(options: CreateRuleModalOptions) {
   const mod = await import(
     /* webpackChunkName: "CreateOwnershipRuleModal" */ 'app/components/modals/createOwnershipRuleModal'
   );
   const {default: Modal, modalCss} = mod;
 
+  openModal(deps => <Modal {...deps} {...options} />, {modalCss});
+}
+
+export async function openCreateDataPrivacyRule(options: CreateRuleModalOptions) {
+  const mod = await import(
+    /* webpackChunkName: "CreateDataPrivacyRule" */ 'app/components/modals/createDataPrivacyRule'
+  );
+  const {default: Modal, modalCss} = mod;
   openModal(deps => <Modal {...deps} {...options} />, {modalCss});
 }
 
