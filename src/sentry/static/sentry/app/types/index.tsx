@@ -367,8 +367,8 @@ export type User = Omit<AvatarUser, 'options'> & {
 };
 
 export type CommitAuthor = {
-  email: string;
-  name: string;
+  email?: string;
+  name?: string;
 };
 
 // TODO(ts): This type is incomplete
